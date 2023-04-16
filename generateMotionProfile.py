@@ -54,9 +54,6 @@ class point:
         self.x_pix = x * (1/FEETTOPIXELS)
         self.y_pix = y * (1/FEETTOPIXELS)
         myCanvas.create_oval(self.x_pix - CIRCLE_DIAMETER, self.y_pix - CIRCLE_DIAMETER, self.x_pix + CIRCLE_DIAMETER, self.y_pix + CIRCLE_DIAMETER, fill="red")
-        # draw a line between the last two points
-        if len(points) > 1:
-            drawLine(points[-2], points[-1])
 
     def __str__(self):
         return f"{{{round(self.x)}_ft, {round(self.y)}_ft, {round(self.ang)}_deg}}"
@@ -64,6 +61,9 @@ class point:
 
 def placePoint(e):
     points.append(point(e.x * FEETTOPIXELS, e.y * FEETTOPIXELS, 0))
+    # draw a line between the last two points
+    if(len(points) > 1):
+        drawLine(points[-2], points[-1])
 
 
 def printPoints():
