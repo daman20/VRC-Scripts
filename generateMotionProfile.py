@@ -25,8 +25,8 @@ img = cv2.imread("vex field.png")
 CANVAS_HEIGHT, CANVAS_WIDTH, no_channels = img.shape
 
 #constants
-FIELD_WIDTH = 24
-FIELD_HEIGHT = 24
+FIELD_WIDTH = 12
+FIELD_HEIGHT = 12
 FEETTOPIXELS = FIELD_WIDTH/CANVAS_WIDTH
 CIRCLE_DIAMETER = 30
 
@@ -35,8 +35,8 @@ CIRCLE_DIAMETER = 30
 myCanvas = tkinter.Canvas(root, bg="white", height=CANVAS_HEIGHT, width=CANVAS_WIDTH)
 
 # draw image
-field = tkinter.PhotoImage(file = "vex field.png")
-myCanvas.create_image(0, 0, image = field, anchor = tkinter.NW)
+field = tkinter.PhotoImage(file="vex field.png")
+myCanvas.create_image(0, 0, image=field, anchor=tkinter.NW)
 
 
 points = []
@@ -54,7 +54,7 @@ class point:
         self.x_pix = x * (1/FEETTOPIXELS)
         self.y_pix = y * (1/FEETTOPIXELS)
         myCanvas.create_oval(self.x_pix - CIRCLE_DIAMETER, self.y_pix - CIRCLE_DIAMETER, self.x_pix + CIRCLE_DIAMETER, self.y_pix + CIRCLE_DIAMETER, fill="red")
-        #draw a line between the last two points
+        # draw a line between the last two points
         if len(points) > 1:
             drawLine(points[-2], points[-1])
 
@@ -66,6 +66,17 @@ def placePoint(e):
     points.append(point(e.x * FEETTOPIXELS, e.y * FEETTOPIXELS, 0))
 
 
+def printPoints():
+    # print the points
+    print("generatePath({")
+    for i in points:
+        print(i)
+        if(i != points[-1]):
+            print(",")
+    print("},")
+    print(f"\"{name}\");")
+
+
 # bind mouse click to placePoint
 myCanvas.bind("<Button-1>", placePoint)
 
@@ -75,8 +86,7 @@ myCanvas.pack()
 root.mainloop()
 
 
-# print the points
-for i in points:
-    print(i)
-    if(i != points[-1]):
-        print(",")
+name = input("Enter the name of the profile: ")
+
+
+printPoints()
