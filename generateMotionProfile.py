@@ -56,7 +56,7 @@ class point:
         myCanvas.create_oval(self.x_pix - CIRCLE_DIAMETER, self.y_pix - CIRCLE_DIAMETER, self.x_pix + CIRCLE_DIAMETER, self.y_pix + CIRCLE_DIAMETER, fill="red")
 
     def __str__(self):
-        return f"{{{round(self.x)}_ft, {round(self.y)}_ft, {round(self.ang)}_deg}}"
+        return f"{{{round(self.x*12)}_in, {round(self.y*12)}_in, {round(self.ang)}_deg}}"
 
 
 def placePoint(e):
