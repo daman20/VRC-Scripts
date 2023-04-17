@@ -25,10 +25,13 @@ img = cv2.imread("vex field.png")
 CANVAS_HEIGHT, CANVAS_WIDTH, no_channels = img.shape
 
 #constants
+# UNIT is a QLength unit from this page: https://okapilib.github.io/OkapiLib/md_docs_api_units.html
+UNIT = "ft"
+# the width and height of the field IN UNIT
 FIELD_WIDTH = 12
 FIELD_HEIGHT = 12
 FEETTOPIXELS = FIELD_WIDTH/CANVAS_WIDTH
-CIRCLE_DIAMETER = 30
+CIRCLE_DIAMETER = 20
 
 
 # create canvas
@@ -53,21 +56,23 @@ class point:
         self.ang = angle
         self.x_pix = x * (1/FEETTOPIXELS)
         self.y_pix = y * (1/FEETTOPIXELS)
-        myCanvas.create_oval(self.x_pix - CIRCLE_DIAMETER, self.y_pix - CIRCLE_DIAMETER, self.x_pix + CIRCLE_DIAMETER, self.y_pix + CIRCLE_DIAMETER, fill="red")
+        # draw the point
+        myCanvas.create_oval(self.x_pix - CIRCLE_DIAMETER, self.y_pix - CIRCLE_DIAMETER, self.x_pix + CIRCLE_DIAMETER, self.y_pix + CIRCLE_DIAMETER, fill="blue")
 
     def __str__(self):
-        return f"{{{round(self.x*12)}_in, {round(self.y*12)}_in, {round(self.ang)}_deg}}"
+        return f"{{{round(self.x)}_{UNIT}, {round(self.y)}_{UNIT}, {round(self.ang)}_deg}}"
 
 
 def placePoint(e):
-    points.append(point(e.x * FEETTOPIXELS, e.y * FEETTOPIXELS, 0))
+    # add the point to the list
+    points.append(point(e.x * FEETTOPIXELS, e.y * FEETTOPIXELS, 0)) 
     # draw a line between the last two points
     if(len(points) > 1):
         drawLine(points[-2], points[-1])
 
 
 def printPoints():
-    # print the points
+    # print the points in the format used by the robot
     print("generatePath({")
     for i in points:
         print(i)
